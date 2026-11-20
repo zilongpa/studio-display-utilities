@@ -1,0 +1,22 @@
+# macOS 27.0.1, Studio Display XDR. Backlight in nits read from the display (HID feature report 1)
+# at 17 slider positions, with "High Dynamic Range" switched off and on (tools/mac-hdr.swift, tools/measure-mac.swift 16).
+# With HDR off the value is 1.2 x the HDR-on value, capped at 600.
+# NSScreen reported edrNow=1.2, edrPotential=16 in both states; HID input report 6 = 2000 / 600 (HDR peak / SDR maximum).
+slider,linear,nits_hdr_off,nits_hdr_on
+0.0,0.006666666,4.8,4.0
+0.0625,0.023742234,17.09,14.24
+0.125,0.039930955,28.75,23.95
+0.1875,0.059442814,42.79,35.66
+0.25,0.083084136,59.82,49.85
+0.3125,0.11155064,80.31,66.93
+0.375,0.1455575,104.8,87.33
+0.4375,0.18587302,133.82,111.52
+0.5,0.23333333,168.0,140.0
+0.5625,0.28885275,207.97,173.31
+0.625,0.35343152,254.47,212.05
+0.6875,0.4281638,308.27,256.89
+0.75,0.5142451,370.25,308.54
+0.8125,0.61298126,441.34,367.78
+0.875,0.7257958,522.57,435.47
+0.9375,0.8542395,600.0,512.54
+1.0,1.0,600.0,600.0

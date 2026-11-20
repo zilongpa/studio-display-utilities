@@ -1,0 +1,4 @@
+target/
+*.log
+# experiments and one-off measurement scripts: local paths, third-party files, device dumps
+tools/scratch/

@@ -1,0 +1,69 @@
+﻿
+== \\?\hid#vid_05ac&pid_1116&mi_06&col03#c&733a481&0&0002#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x0047  ReportLen In=0 Out=0 Feat=1288
+    [FEAT VAL ] Page=0xFF28 Usage=0x0004..0x0004 ReportID=0x0F Bits=8 Count=4 Log=0..35 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0001..0x0001 ReportID=0x10 Bits=8 Count=1 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0005..0x0005 ReportID=0x10 Bits=8 Count=4 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0006..0x0006 ReportID=0x10 Bits=8 Count=2 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0007..0x0007 ReportID=0x10 Bits=8 Count=1280 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0008..0x0008 ReportID=0x11 Bits=8 Count=2 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF28 Usage=0x0009..0x0009 ReportID=0x11 Bits=8 Count=1 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+
+== \\?\hid#vid_05ac&pid_1116&mi_06&col04#c&733a481&0&0003#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x003A  ReportLen In=2001 Out=5 Feat=0
+    [IN VAL ] Page=0xFF23 Usage=0x0001..0x0001 ReportID=0x07 Bits=8 Count=2000 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+   HidD_GetInputReport id=0x07 failed err=31
+
+== \\?\hid#vid_05ac&pid_1116&mi_05#c&2224bfa8&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x0053  ReportLen In=26 Out=0 Feat=0
+    [IN VAL ] Page=0xFF00 Usage=0x0053..0x0053 ReportID=0x01 Bits=8 Count=25 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+   HidD_GetInputReport id=0x01 failed err=31
+
+== \\?\hid#vid_05ac&pid_1116&mi_06&col01#c&733a481&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x000B  ReportLen In=5 Out=0 Feat=10
+    [IN VAL ] Page=0xFF00 Usage=0x000B..0x000B ReportID=0x01 Bits=8 Count=4 Log=0..255 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF16 Usage=0x0003..0x0003 ReportID=0x01 Bits=8 Count=1 Log=0..255 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF16 Usage=0x0004..0x0004 ReportID=0x01 Bits=8 Count=8 Log=0..255 Phys=0..0 UnitExp=0 Units=0x00000000
+   HidD_GetInputReport id=0x01 failed err=31
+
+== \\?\hid#vid_05ac&pid_1116&mi_07&col01#c&1ef730c6&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0x0080 Usage=0x0001  ReportLen In=5 Out=0 Feat=7
+    [IN VAL ] Page=0x0082 Usage=0x0010..0x0010 ReportID=0x01 Bits=32 Count=1 Log=400..60000 Phys=0..0 UnitExp=-2 Units=0x010000E1
+    [FEAT VAL ] Page=0x0082 Usage=0x0010..0x0010 ReportID=0x01 Bits=32 Count=1 Log=400..60000 Phys=0..0 UnitExp=-2 Units=0x010000E1
+    [FEAT VAL ] Page=0x000F Usage=0x0050..0x0050 ReportID=0x01 Bits=16 Count=1 Log=0..20000 Phys=0..0 UnitExp=-3 Units=0x00000110
+   HidD_GetInputReport id=0x01 failed err=31
+
+== \\?\hid#vid_05ac&pid_1116&mi_07&col02#c&1ef730c6&0&0001#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x0037  ReportLen In=9 Out=0 Feat=5
+    [IN VAL ] Page=0xFF15 Usage=0x0003..0x0003 ReportID=0x06 Bits=64 Count=1 Log=400..60000 Phys=0..0 UnitExp=-2 Units=0x010000E1
+    [FEAT VAL ] Page=0x0020 Usage=0x030E..0x030E ReportID=0x06 Bits=32 Count=1 Log=400..60000 Phys=0..0 UnitExp=-2 Units=0x010000E1
+   INPUT report id=0x06 (9 bytes): 06 D0 07 00 00 58 02 00 00
+
+== \\?\hid#vid_05ac&pid_1116&mi_06&col02#c&733a481&0&0001#{4d1e55b2-f16f-11cf-88cb-001111000030}
+   opened RW
+   VID=0x05AC PID=0x1116 Ver=0x1801
+   TLC UsagePage=0xFF00 Usage=0x0002  ReportLen In=0 Out=0 Feat=5347
+    [FEAT VAL ] Page=0xFF20 Usage=0x0002..0x0002 ReportID=0x03 Bits=8 Count=4 Log=0..35 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0003..0x0003 ReportID=0x03 Bits=8 Count=4 Log=0..35 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0004..0x0004 ReportID=0x04 Bits=8 Count=4 Log=0..35 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0005..0x0005 ReportID=0x05 Bits=8 Count=1 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0006..0x0006 ReportID=0x05 Bits=8 Count=1 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0008..0x0008 ReportID=0x05 Bits=8 Count=256 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0009..0x0009 ReportID=0x05 Bits=8 Count=764 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x000F..0x000F ReportID=0x05 Bits=8 Count=2 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0010..0x0010 ReportID=0x05 Bits=8 Count=4096 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x000E..0x000E ReportID=0x05 Bits=8 Count=16 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0011..0x0011 ReportID=0x0E Bits=8 Count=2 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000
+    [FEAT VAL ] Page=0xFF20 Usage=0x0012..0x0012 ReportID=0x0E Bits=8 Count=13536 Log=0..1 Phys=0..0 UnitExp=0 Units=0x00000000

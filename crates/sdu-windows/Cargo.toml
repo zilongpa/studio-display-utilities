@@ -1,0 +1,9 @@
+[package]
+name = "sdu-windows"
+description = "Studio Display Utilities: talking to the display and to Windows"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+sdu-core = { path = "../sdu-core" }

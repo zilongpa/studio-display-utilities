@@ -1,0 +1,102 @@
+# display found: true, HID interfaces: 0020:008a() 0080:0001(1:7,6:5) ff00:000b(1:10,3:9,4:0,5:5137,9:2050,10:10,11:0,12:4105,14:13539,15:0,16:1288,17:515) ff00:001a(1:42,2:42) ff00:0053()
+# light sensors: 2, True Tone supported=Optional(true) available=Optional(true) enabled=Optional(true)
+True Tone off: true
+True Tone on: true
+True Tone off: true
+restoring True Tone to true: true
+
+== as found -> off
+  ambient:
+      [[64,0,0,0,0,0,1,68.863600000000005,64,22.809200000000001,3079,64],[7786,0,0,0,0,0,1,8403.7641999999996,7786,2766.3366000000001,2945,7786]]
+   -> [[64,0,0,0,0,0,1,68.863600000000005,64,22.809100000000001,3037,64],[7785,0,0,0,0,0,1,8402.4226999999992,7785,2767.1109999999999,2945,7785]]
+  hid.ff00:000b/01:
+      0100e43af3edfa886f09
+   -> 01006ebb806c93afed91
+  hid.ff00:000b/0a:
+      0a008ac6459088aeca22
+   -> 0a00044f36a875846680
+  hid.ff00:001a/01:
+      0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000160f0800
+   -> 0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+  hid.ff00:001a/02:
+      0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000de100800
+   -> 0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+  properties.ColorAdaptationActive:
+      1
+   -> 0
+  properties.ColorAdaptationEnabled:
+      1
+   -> 0
+  properties.ColorAdaptationStrength:
+      0.2
+   -> 0
+  properties.ColorRamp:
+      { ColorRampPeriod = 0; ColorRampTarget = ( "0.8995253", "0.08634798", "0.01412671", "-0.004112944", "0.8266813", "0.00173238", "-0.007524024", "-0.02681617", "0.6941562" ); ColorRampTimestamp = "2026-11-20 06:09:08 +0000"; ColorRampWhitePointTarget = ( "0.3413523", "0.3511355" ); ColorScaler = 1; }
+   -> { ColorRampPeriod = 0; ColorRampTarget = ( 1, 0, 0, 0, 1, 0, 0, 0, 1 ); ColorRampTimestamp = "2026-11-20 06:09:20 +0000"; ColorRampWhitePointTarget = ( "0.3127441", "0.3291015" ); ColorScaler = 1; }
+  properties.TrueTone.enabled:
+      true
+   -> false
+
+== off -> on
+  ambient:
+      [[64,0,0,0,0,0,1,68.863600000000005,64,22.809100000000001,3037,64],[7785,0,0,0,0,0,1,8402.4226999999992,7785,2767.1109999999999,2945,7785]]
+   -> [[64,0,0,0,0,0,1,68.588499999999996,64,22.7788,3039,64],[7784,0,0,0,0,0,1,8402.3354999999992,7784,2767.0351999999998,2945,7784]]
+  hid.ff00:000b/01:
+      01006ebb806c93afed91
+   -> 010057d50eb82e8f3a14
+  hid.ff00:000b/0a:
+      0a00044f36a875846680
+   -> 0a00cc664c1918935bf8
+  hid.ff00:001a/01:
+      0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+   -> 0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000e60e0800
+  hid.ff00:001a/02:
+      0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+   -> 0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000b50f0800
+  properties.ColorAdaptationActive:
+      0
+   -> 1
+  properties.ColorAdaptationEnabled:
+      0
+   -> 1
+  properties.ColorAdaptationStrength:
+      0
+   -> 0.2
+  properties.ColorRamp:
+      { ColorRampPeriod = 0; ColorRampTarget = ( 1, 0, 0, 0, 1, 0, 0, 0, 1 ); ColorRampTimestamp = "2026-11-20 06:09:20 +0000"; ColorRampWhitePointTarget = ( "0.3127441", "0.3291015" ); ColorScaler = 1; }
+   -> { ColorRampPeriod = 0; ColorRampTarget = ( "0.8996982", "0.08620544", "0.01409636", "-0.004106244", "0.8269709", "0.001727795", "-0.007506692", "-0.02675018", "0.6947904" ); ColorRampTimestamp = "2026-11-20 06:09:32 +0000"; ColorRampWhitePointTarget = ( "0.3412782", "0.3510675" ); ColorScaler = 1; }
+  properties.TrueTone.enabled:
+      false
+   -> true
+
+== on -> off again
+  ambient:
+      [[64,0,0,0,0,0,1,68.588499999999996,64,22.7788,3039,64],[7784,0,0,0,0,0,1,8402.3354999999992,7784,2767.0351999999998,2945,7784]]
+   -> [[64,0,0,0,0,0,1,68.855999999999995,64,22.706299999999999,3029,64],[7785,0,0,0,0,0,1,8403.2829000000002,7785,2767.5891999999999,2946,7785]]
+  hid.ff00:000b/01:
+      010057d50eb82e8f3a14
+   -> 0100295b3889e186ece9
+  hid.ff00:000b/0a:
+      0a00cc664c1918935bf8
+   -> 0a008e725d0115e46d56
+  hid.ff00:001a/01:
+      0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000e60e0800
+   -> 0102c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+  hid.ff00:001a/02:
+      0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d0070000b50f0800
+   -> 0202c800ff01020a00000014000a00320050005a002c016400e80302c800dc050000d007000000e1f505
+  properties.ColorAdaptationActive:
+      1
+   -> 0
+  properties.ColorAdaptationEnabled:
+      1
+   -> 0
+  properties.ColorAdaptationStrength:
+      0.2
+   -> 0
+  properties.ColorRamp:
+      { ColorRampPeriod = 0; ColorRampTarget = ( "0.8996982", "0.08620544", "0.01409636", "-0.004106244", "0.8269709", "0.001727795", "-0.007506692", "-0.02675018", "0.6947904" ); ColorRampTimestamp = "2026-11-20 06:09:32 +0000"; ColorRampWhitePointTarget = ( "0.3412782", "0.3510675" ); ColorScaler = 1; }
+   -> { ColorRampPeriod = 0; ColorRampTarget = ( 1, 0, 0, 0, 1, 0, 0, 0, 1 ); ColorRampTimestamp = "2026-11-20 06:10:02 +0000"; ColorRampWhitePointTarget = ( "0.3127441", "0.3291015" ); ColorScaler = 1; }
+  properties.TrueTone.enabled:
+      true
+   -> false

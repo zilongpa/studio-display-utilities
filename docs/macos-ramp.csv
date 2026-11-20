@@ -1,0 +1,14 @@
+# original slider=1.0 auto=true nits=600.0
+# ramp 0.5 -> 0.5625, start nits=140.0
+ms,nits
+0,140.0
+80,173.31
+# ramp 0.5625 -> 0.5, start nits=173.31
+ms,nits
+0,173.31
+96,140.0
+# ramp 0.25 -> 0.75, start nits=49.85
+ms,nits
+0,49.85
+95,308.54
+# restored

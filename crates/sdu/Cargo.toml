@@ -1,0 +1,10 @@
+[package]
+name = "sdu"
+description = "Studio Display Utilities: brightness, True Tone and HDR for Apple Studio Displays on Windows"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+sdu-core = { path = "../sdu-core" }
+sdu-windows = { path = "../sdu-windows" }
