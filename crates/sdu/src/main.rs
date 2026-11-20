@@ -215,6 +215,9 @@ impl App {
                     self.current = nits;
                     self.target = nits;
                     self.remember_adjustment();
+                    if self.white.disturbed(true) {
+                        unsafe { SetTimer(self.hwnd, TIMER_WHITE, WHITE_FRAME_MS, null()) };
+                    }
                 }
             }
             None => {

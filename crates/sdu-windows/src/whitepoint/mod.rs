@@ -27,6 +27,13 @@ pub fn create(method: Method) -> Result<Box<dyn WhitePoint>, String> {
     })
 }
 
+/// Whether changing the brightness in HDR silently undoes what this method set (Windows resets the
+/// gamma ramp whenever the SDR content brightness changes). For such a method the white has to be
+/// written again after every change of brightness.
+pub fn undone_by_hdr_brightness(method: Method) -> bool {
+    matches!(method, Method::Automatic | Method::GammaRamp)
+}
+
 /// The choices that make sense on this system, for a menu.
 pub fn available() -> Vec<Method> {
     let mut methods = vec![Method::Automatic, Method::GammaRamp, Method::ColorEffect];

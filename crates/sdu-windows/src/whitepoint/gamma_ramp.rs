@@ -7,8 +7,10 @@
 //! (`signal_gains`). Measured with the display's light sensor, the result then agrees with the colour
 //! effect on white and on greys.
 //! Windows itself puts the ramp back to a straight line whenever the SDR content brightness changes
-//! (which is how brightness is set in HDR). Writing it again after every step of a brightness fade
-//! flickers, so the caller lets the white go for the duration (`undone_by_hdr_brightness`).
+//! (which is how brightness is set in HDR), and it does so without a trace: reading the ramp back
+//! still returns what was written. Writing it again after every step of a brightness fade flickers,
+//! so the caller lets the white go for the duration and brings it back afterwards (see
+//! `undone_by_hdr_brightness` in the parent module).
 //! Full screen games and other colour tools may replace the ramp at any time, and Windows refuses
 //! ramps that stray too far from a straight line.
 
@@ -93,20 +95,18 @@ impl WhitePoint for GammaRamp {
         Ok(())
     }
 
-    fn undone_by_hdr_brightness(&self) -> bool {
-        true
-    }
-
     fn keep(&mut self) {
         if self.applied.is_none() {
             return;
         }
-        let mut now = [0u16; 3 * 256];
-        let read = with_screen(|dc| unsafe { GetDeviceGammaRamp(dc, now.as_mut_ptr()) });
-        if read != 0 && now != self.written {
-            let ramp = self.written;
-            with_screen(|dc| unsafe { SetDeviceGammaRamp(dc, ramp.as_ptr()) });
-        }
+        // Reading the ramp back does not show whether it is still in effect: in HDR Windows drops it
+        // (on a change of brightness, and at other moments) while still returning what was written.
+        // So it is simply written again. One entry of no consequence alternates by one step, so that
+        // the write is never taken for a repetition and skipped.
+        let mut ramp = self.written;
+        ramp[1] ^= 1;
+        self.written = ramp;
+        with_screen(|dc| unsafe { SetDeviceGammaRamp(dc, ramp.as_ptr()) });
     }
 }
 

@@ -329,7 +329,6 @@ extern "system" {
     pub fn CreateDCW(driver: *const u16, device: *const u16, port: *const u16, mode: *const c_void) -> HANDLE;
     pub fn DeleteDC(dc: HANDLE) -> i32;
     pub fn SetDeviceGammaRamp(dc: HANDLE, ramp: *const u16) -> i32;
-    pub fn GetDeviceGammaRamp(dc: HANDLE, ramp: *mut u16) -> i32;
     pub fn DeleteObject(object: HANDLE) -> i32;
     pub fn SelectObject(dc: HANDLE, object: HANDLE) -> HANDLE;
     pub fn SetTextColor(dc: HANDLE, color: u32) -> u32;

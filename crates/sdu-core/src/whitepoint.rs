@@ -20,12 +20,6 @@ pub trait WhitePoint {
 
     /// Called every second or so: puts the white back if something else has undone it.
     fn keep(&mut self) {}
-
-    /// Whether changing the brightness in HDR undoes this method's work (the system then resets what
-    /// the method set). If so, the white is let go while the brightness moves and brought back after.
-    fn undone_by_hdr_brightness(&self) -> bool {
-        false
-    }
 }
 
 /// Which way the user wants. `Automatic` lets the program pick: the gamma ramp, which shows the

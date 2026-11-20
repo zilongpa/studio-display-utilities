@@ -63,14 +63,23 @@ impl White {
     }
 
     /// The brightness is about to move in HDR. If that undoes the method's work, the white is given
-    /// up now (the system is about to take it away anyway) until `resume`.
+    /// up now (the system is about to take it away anyway) until `resume`. This holds whether or not
+    /// the white has been put on the screen yet: a white fading in while the brightness moves would be
+    /// wiped just the same, and nothing could tell.
     pub fn pause(&mut self, hdr: bool) {
-        if hdr && !self.paused && self.backend.as_ref().is_some_and(|backend| backend.undone_by_hdr_brightness()) {
+        if hdr && !self.paused && whitepoint::undone_by_hdr_brightness(self.method) {
             self.paused = true;
             self.fade = None;
             self.backend = None;
             self.white = NEUTRAL;
         }
+    }
+
+    /// The brightness was changed in HDR by something else (the slider in Settings): if that wiped
+    /// the white, it comes back as after a pause.
+    pub fn disturbed(&mut self, hdr: bool) -> bool {
+        self.pause(hdr);
+        self.resume()
     }
 
     /// The brightness has stopped moving: the white comes back, gradually. Returns whether a fade is
