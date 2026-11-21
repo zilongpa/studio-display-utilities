@@ -47,6 +47,10 @@ const ROTATE_AFTER_MS: u32 = 700;
 /// Seconds before HDR is switched on again after an attempt, so a display that cannot do it is not
 /// asked over and over.
 const HDR_RETRY_SECONDS: u64 = 60;
+/// F14 and F15 change the brightness, as they do on a Mac with a keyboard that has no brightness keys.
+const HOTKEY_DARKER: i32 = 1;
+const HOTKEY_BRIGHTER: i32 = 2;
+const KEY_NOTCHES: f64 = 16.0;
 const TIMER_FADE: usize = 1;
 const TIMER_STATE: usize = 2;
 const TIMER_RECONNECT: usize = 4;
@@ -61,6 +65,7 @@ const MENU_AUTOSTART: usize = 5;
 const MENU_HDR: usize = 6;
 const MENU_ROTATE: usize = 7;
 const MENU_SENSORS: usize = 8;
+const MENU_KEYS: usize = 9;
 /// Followed by one id for each of the display's reference modes.
 const MENU_PRESET: usize = 200;
 /// Followed by one id for each of `Method::ALL`.
@@ -176,6 +181,30 @@ impl App {
         self.target = self.nits_of(percent);
         self.remember_adjustment();
         self.start_fade(true);
+    }
+
+    /// Takes F14 and F15 as brightness keys, or gives them back, as the setting says.
+    fn bind_keys(&self) {
+        for (id, key, name) in [(HOTKEY_DARKER, VK_F14, "F14"), (HOTKEY_BRIGHTER, VK_F15, "F15")] {
+            unsafe {
+                UnregisterHotKey(self.hwnd, id);
+                if self.config.keys && RegisterHotKey(self.hwnd, id, 0, key) == 0 {
+                    log(&format!("{name} is taken by another program, error {}", GetLastError()));
+                }
+            }
+        }
+    }
+
+    /// F14 or F15 was pressed: one notch down or up, of the sixteen the brightness keys have on a Mac.
+    fn step(&mut self, up: bool) {
+        // The tenth of a notch allows for the rounding of a notch to whole percent.
+        let notch = self.percent as f64 * KEY_NOTCHES / 100.0;
+        let notch = if up { (notch + 0.1).floor() + 1.0 } else { (notch - 0.1).ceil() - 1.0 };
+        let percent = (notch.clamp(0.0, KEY_NOTCHES) * 100.0 / KEY_NOTCHES).round() as u32;
+        if percent != self.percent {
+            self.system_changed(percent);
+            system::write(percent);
+        }
     }
 
     /// What the curve asks for right now, before the user's adjustment; `None` if automatic
@@ -549,6 +578,7 @@ impl App {
         items.extend([
             line(MENU_HDR, checked(self.config.hdr), "Keep HDR on"),
         ]);
+        items.push(line(MENU_KEYS, checked(self.config.keys), "F14 and F15 change the brightness"));
         if self.orientation.degrees().is_some() {
             items.push(line(MENU_ROTATE, checked(self.config.rotate), "Turn the picture with the screen"));
         }
@@ -595,6 +625,11 @@ impl App {
                     }
                     unsafe { PostMessageW(window as HWND, MSG_HDR_DONE, 0, 0) }; // look for the devices again
                 });
+            }
+            MENU_KEYS => {
+                self.config.keys = !self.config.keys;
+                self.config.save();
+                self.bind_keys();
             }
             MENU_ROTATE => {
                 self.config.rotate = !self.config.rotate;
@@ -692,6 +727,10 @@ unsafe extern "system" fn window_proc(hwnd: HWND, message: u32, wparam: usize, l
                 app.retarget(false);
                 app.retarget_white();
             });
+            0
+        }
+        WM_HOTKEY => {
+            with_app(|app| app.step(wparam as i32 == HOTKEY_BRIGHTER));
             0
         }
         MSG_ORIENTATION => {
@@ -1000,6 +1039,7 @@ fn main() {
         if !system::subscribe(hwnd) {
             log(&format!("system brightness changes could not be subscribed to, error {}", GetLastError()));
         }
+        with_app(|app| app.bind_keys());
         SetTimer(hwnd, TIMER_STATE, 1000, null());
 
         let mut message: MSG = std::mem::zeroed();

@@ -16,6 +16,8 @@ One small tray program, `sdu.exe`: written in Rust, no dependencies, a few hundr
   the system's brightness bar; the program follows that value and keeps it in step with the real
   brightness, so the bar is always right. The 0 – 100 % scale is the macOS brightness slider: the
   same position gives the same brightness as on a Mac. Works in full screen games.
+- **F14 and F15.** As on a Mac, they turn the brightness down and up by one of sixteen notches, for
+  keyboards without brightness keys; this can be switched off in the menu. (The system's brightness bar only shows for the real keys.)
 - **Keys and automatic brightness together.** A manual change is remembered as a factor on the
   curve, so brightness keeps following the room around the level you chose.
 - **SDR and HDR.** In SDR the display's backlight is set (4 – 600 nits). In HDR the backlight has no
