@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "sdu"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "sdu-core",
  "sdu-windows",
@@ -12,11 +12,11 @@ dependencies = [
 
 [[package]]
 name = "sdu-core"
-version = "0.1.1"
+version = "0.1.2"
 
 [[package]]
 name = "sdu-windows"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "sdu-core",
 ]
