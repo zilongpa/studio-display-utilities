@@ -300,6 +300,15 @@ extern "system" {
     pub fn TrackPopupMenu(menu: HANDLE, flags: u32, x: i32, y: i32, reserved: i32, hwnd: HWND, rect: *const RECT) -> i32;
     pub fn DestroyMenu(menu: HANDLE) -> i32;
     pub fn GetCursorPos(point: *mut POINT) -> i32;
+    pub fn GetForegroundWindow() -> HWND;
+    pub fn IsWindow(hwnd: HWND) -> i32;
+    pub fn IsIconic(hwnd: HWND) -> i32;
+    pub fn GetShellWindow() -> HWND;
+    pub fn GetDesktopWindow() -> HWND;
+    pub fn GetClassNameW(hwnd: HWND, name: *mut u16, length: i32) -> i32;
+    pub fn GetWindowRect(hwnd: HWND, rect: *mut RECT) -> i32;
+    pub fn MonitorFromWindow(hwnd: HWND, flags: u32) -> HANDLE;
+    pub fn GetMonitorInfoW(monitor: HANDLE, info: *mut c_void) -> i32;
     pub fn SetForegroundWindow(hwnd: HWND) -> i32;
     pub fn ShowWindow(hwnd: HWND, command: i32) -> i32;
     pub fn IsWindowVisible(hwnd: HWND) -> i32;

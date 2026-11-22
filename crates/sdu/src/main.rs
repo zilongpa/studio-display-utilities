@@ -27,7 +27,7 @@ use sdu_windows::sensor::{self, Sensor};
 use sdu_windows::util::{log, wide};
 use sdu_windows::orientation::Orientation;
 use sdu_windows::presets::{self, Presets};
-use sdu_windows::{amd, autostart, elevate, rotation, system, whitepoint};
+use sdu_windows::{amd, autostart, elevate, fullscreen, rotation, system, whitepoint};
 use std::cell::RefCell;
 use std::ptr::{null, null_mut};
 use std::time::Instant;
@@ -66,6 +66,7 @@ const MENU_HDR: usize = 6;
 const MENU_ROTATE: usize = 7;
 const MENU_SENSORS: usize = 8;
 const MENU_KEYS: usize = 9;
+const MENU_FULLSCREEN: usize = 10;
 /// Followed by one id for each of the display's reference modes.
 const MENU_PRESET: usize = 200;
 /// Followed by one id for each of `Method::ALL`.
@@ -114,6 +115,9 @@ struct App {
     ticks: u32,
     /// Windows' brightness value (0 - 100) as last seen or written.
     percent: u32,
+    /// True Tone has stepped aside for a program that has the whole screen in HDR.
+    aside: bool,
+    fullscreen: fullscreen::Watch,
 }
 
 thread_local! {
@@ -369,6 +373,19 @@ impl App {
         }
     }
 
+    /// Called every second: in HDR, True Tone steps aside while a program has the whole screen (see
+    /// `fullscreen`), and comes back afterwards.
+    fn check_fullscreen(&mut self) {
+        let aside = self.config.truetone && self.config.fullscreen && self.hdr_active && self.fullscreen.active();
+        if aside != self.aside {
+            self.aside = aside;
+            log(if aside { "white point: a program has the whole screen, stepping aside" } else { "white point: the screen is shared again" });
+            if self.white.hide(aside) {
+                unsafe { SetTimer(self.hwnd, TIMER_WHITE, WHITE_FRAME_MS, null()) };
+            }
+        }
+    }
+
     fn white_frame(&mut self) {
         if !self.white.frame(self.hdr_active) {
             unsafe { KillTimer(self.hwnd, TIMER_WHITE) };
@@ -570,6 +587,7 @@ impl App {
             line(0, MF_SEPARATOR, ""),
             line(MENU_TRUETONE, checked(self.config.truetone), "True Tone"),
             Item::Sub("True Tone method".to_string(), methods),
+            line(MENU_FULLSCREEN, checked(self.config.fullscreen), "Pause True Tone for full-screen programs (HDR)"),
             line(0, MF_SEPARATOR, ""),
         ]);
         if !modes.is_empty() {
@@ -625,6 +643,11 @@ impl App {
                     }
                     unsafe { PostMessageW(window as HWND, MSG_HDR_DONE, 0, 0) }; // look for the devices again
                 });
+            }
+            MENU_FULLSCREEN => {
+                self.config.fullscreen = !self.config.fullscreen;
+                self.config.save();
+                self.check_fullscreen();
             }
             MENU_KEYS => {
                 self.config.keys = !self.config.keys;
@@ -701,6 +724,7 @@ unsafe extern "system" fn window_proc(hwnd: HWND, message: u32, wparam: usize, l
                 TIMER_STATE => {
                     with_app(|app| {
                         app.refresh_state();
+                        app.check_fullscreen();
                         app.white.keep();
                     });
                 }
@@ -1027,6 +1051,8 @@ fn main() {
             pretend_ambient: std::env::var("SDU_AMBIENT_XY").ok().and_then(|text| parse_xy(&text)),
             ticks: 0,
             percent: system::read().unwrap_or(50),
+            aside: false,
+            fullscreen: fullscreen::Watch::default(),
         };
         app.read_presets();
         app.refresh_state();

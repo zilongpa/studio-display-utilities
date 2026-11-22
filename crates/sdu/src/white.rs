@@ -16,6 +16,8 @@ use std::time::Instant;
 const DEAD_BAND: f64 = 0.0006;
 /// Seconds for the white to come back after a brightness change in HDR took it away.
 const RETURN_SECONDS: f64 = 1.5;
+/// Seconds for the white to leave when it has to step aside.
+const LEAVE_SECONDS: f64 = 0.5;
 
 pub struct White {
     method: Method,
@@ -31,11 +33,14 @@ pub struct White {
     /// The brightness is moving in HDR and the method cannot hold the white meanwhile: the screen is
     /// at its own white and stays there until `resume`.
     paused: bool,
+    /// The white is to stay away for now (a program has the whole screen in HDR): the screen goes to
+    /// its own white while the target is kept for later.
+    hidden: bool,
 }
 
 impl White {
     pub fn new(method: Method) -> White {
-        White { method, backend: None, white: NEUTRAL, target: NEUTRAL, fade: None, problem: None, paused: false }
+        White { method, backend: None, white: NEUTRAL, target: NEUTRAL, fade: None, problem: None, paused: false, hidden: false }
     }
 
     pub fn white(&self) -> Xy {
@@ -55,8 +60,29 @@ impl White {
     pub fn aim(&mut self, white: Xy) -> bool {
         if truetone::distance(white, self.target) >= DEAD_BAND || (white == NEUTRAL && self.target != NEUTRAL) {
             self.target = white;
-            if !self.paused {
+            if !self.paused && !self.hidden {
                 self.fade = Some((self.white, Fade::new(0.0, 1.0, truetone::FADE_SECONDS), Instant::now()));
+            }
+        }
+        self.fade.is_some()
+    }
+
+    /// Where the white is to be: the target, or the display's own white while hidden.
+    fn goal(&self) -> Xy {
+        if self.hidden {
+            NEUTRAL
+        } else {
+            self.target
+        }
+    }
+
+    /// Sends the white away, or lets it come back. Returns whether a fade is now running.
+    pub fn hide(&mut self, hidden: bool) -> bool {
+        if hidden != self.hidden {
+            self.hidden = hidden;
+            if !self.paused && self.white != self.goal() {
+                let seconds = if hidden { LEAVE_SECONDS } else { RETURN_SECONDS };
+                self.fade = Some((self.white, Fade::new(0.0, 1.0, seconds), Instant::now()));
             }
         }
         self.fade.is_some()
@@ -87,7 +113,7 @@ impl White {
     pub fn resume(&mut self) -> bool {
         if self.paused {
             self.paused = false;
-            if self.target != NEUTRAL {
+            if self.goal() != NEUTRAL {
                 self.fade = Some((NEUTRAL, Fade::new(0.0, 1.0, RETURN_SECONDS), Instant::now()));
             }
         }
@@ -98,7 +124,8 @@ impl White {
     pub fn frame(&mut self, hdr: bool) -> bool {
         let Some((from, fade, start)) = self.fade else { return false };
         let elapsed = start.elapsed().as_secs_f64();
-        self.white = if fade.finished(elapsed) { self.target } else { truetone::mix(from, self.target, fade.at(elapsed)) };
+        let goal = self.goal();
+        self.white = if fade.finished(elapsed) { goal } else { truetone::mix(from, goal, fade.at(elapsed)) };
         self.apply(hdr);
         if fade.finished(elapsed) {
             self.fade = None;

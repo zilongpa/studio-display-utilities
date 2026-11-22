@@ -16,6 +16,10 @@ One small tray program, `sdu.exe`: written in Rust, no dependencies, a few hundr
   the system's brightness bar; the program follows that value and keeps it in step with the real
   brightness, so the bar is always right. The 0 – 100 % scale is the macOS brightness slider: the
   same position gives the same brightness as on a Mac. Works in full screen games.
+- **Full-screen HDR.** While a program fills the whole screen in HDR (exclusive or borderless), True
+  Tone steps aside, also while you are in another window, and comes back when that program closes
+  or leaves full screen: with a gamma ramp set, Windows draws the mouse pointer
+  of such a program at the display's peak brightness. This can be switched off in the menu.
 - **F14 and F15.** As on a Mac, they turn the brightness down and up by one of sixteen notches, for
   keyboards without brightness keys; this can be switched off in the menu. (The system's brightness bar only shows for the real keys.)
 - **Keys and automatic brightness together.** A manual change is remembered as a factor on the

@@ -7,6 +7,7 @@ pub mod autostart;
 pub mod backlight;
 pub mod elevate;
 pub mod ffi;
+pub mod fullscreen;
 pub mod hdr;
 pub mod orientation;
 pub mod presets;

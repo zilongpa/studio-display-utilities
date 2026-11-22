@@ -22,11 +22,13 @@ pub struct Config {
     pub rotate: bool,
     /// F14 and F15 change the brightness.
     pub keys: bool,
+    /// True Tone steps aside while a program has the whole screen in HDR.
+    pub fullscreen: bool,
 }
 
 impl Default for Config {
     fn default() -> Config {
-        Config { auto: true, factor: 1.0, truetone: false, whitepoint: Method::Automatic, hdr: false, rotate: true, keys: true }
+        Config { auto: true, factor: 1.0, truetone: false, whitepoint: Method::Automatic, hdr: false, rotate: true, keys: true, fullscreen: true }
     }
 }
 
@@ -50,6 +52,7 @@ impl Config {
                 }
                 ("truetone", value) => config.truetone = value != "0",
                 ("rotate", value) => config.rotate = value != "0",
+                ("fullscreen", value) => config.fullscreen = value != "0",
                 ("keys", value) => config.keys = value != "0",
                 ("hdr", value) => config.hdr = value != "0",
                 ("whitepoint", value) => config.whitepoint = Method::from_key(value).unwrap_or(Method::Automatic),
@@ -60,7 +63,7 @@ impl Config {
     }
 
     pub fn save(&self) {
-        let text = format!("auto={}\nfactor={:.4}\ntruetone={}\nwhitepoint={}\nhdr={}\nrotate={}\nkeys={}\n", self.auto as u8, self.factor, self.truetone as u8, self.whitepoint.key(), self.hdr as u8, self.rotate as u8, self.keys as u8);
+        let text = format!("auto={}\nfactor={:.4}\ntruetone={}\nwhitepoint={}\nhdr={}\nrotate={}\nkeys={}\nfullscreen={}\n", self.auto as u8, self.factor, self.truetone as u8, self.whitepoint.key(), self.hdr as u8, self.rotate as u8, self.keys as u8, self.fullscreen as u8);
         let _ = fs::write(data_dir().join("config.txt"), text);
     }
 }
